@@ -13,9 +13,10 @@ import SidebarRow from "./SidebarRow";
 
 function Sidebar() {
   return (
-    <div className="flex flex-col">
+    // Tell it to take up two columsn, items in the center for mobile view and otherwise at start
+    <div className="flex flex-col col-span-2 items-center px-4 md:items-start">
       <img
-        className="h-10 w-10"
+        className="m-3 h-10 w-10"
         src="https://www.iconpacks.net/icons/2/free-twitter-logo-icon-2429-thumb.png"
         alt="twitter-icon"
       />
