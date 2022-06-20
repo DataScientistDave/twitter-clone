@@ -1,8 +1,14 @@
 import { RefreshIcon } from "@heroicons/react/outline";
 import React from "react";
+import { Tweet } from "../typings";
 import TweetBox from "./TweetBox";
+import TweetComponent from "../components/Tweet";
 
-function Feed() {
+interface Props {
+  tweets: Tweet[];
+}
+
+function Feed({ tweets }: Props) {
   return (
     // use 7 columns until we hit large screen
     <div className="col-span-7 lg:col-span-5 border-x">
@@ -11,7 +17,16 @@ function Feed() {
         <RefreshIcon className="h-8 w-8 cursor-pointer text-twitter transition-all duration-500 ease-out hover:rotate-180 active:scale-125" />
       </div>
       {/* Tweetbox */}
-      <TweetBox />
+      <div>
+        <TweetBox />
+      </div>
+
+      {/* Feed */}
+      <div>
+        {tweets.map((tweet) => {
+          return <TweetComponent key={tweet._id} tweet={tweet} />;
+        })}
+      </div>
     </div>
   );
 }

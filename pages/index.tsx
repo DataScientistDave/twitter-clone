@@ -11,7 +11,7 @@ interface Props {
   tweets: Tweet;
 }
 
-const Home: NextPage = (props: Props) => {
+const Home: NextPage = ({ tweets }: Props) => {
   return (
     // By default tailwind uses mobile view
     // Takes up full screen height but only scroll on widgets
@@ -23,7 +23,7 @@ const Home: NextPage = (props: Props) => {
       {/* So we divide into 9 cols but each component will only take one */}
       <main className="grid grid-cols-9">
         <Sidebar />
-        <Feed />
+        <Feed tweets={tweets} />
         <Widgets />
       </main>
     </div>
