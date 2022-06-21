@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar";
 import Widgets from "../components/Widgets";
 import { Tweet } from "../typings";
 import { fetchTweets } from "../utils/fetchTweets";
+import { Toaster } from "react-hot-toast";
 
 interface Props {
   tweets: Tweet;
@@ -15,11 +16,12 @@ const Home: NextPage = ({ tweets }: Props) => {
   return (
     // By default tailwind uses mobile view
     // Takes up full screen height but only scroll on widgets
-    <div className="lg:max-w-6xl mx-auto max-h-screen overflow-hidden">
+    <div className="lg:max-w-6xl mx-auto max-h-screen overflow-x-hidden">
       <Head>
         <title>Twitter 2.0</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Toaster />
       {/* So we divide into 9 cols but each component will only take one */}
       <main className="grid grid-cols-9">
         <Sidebar />
