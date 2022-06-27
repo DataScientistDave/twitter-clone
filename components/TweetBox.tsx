@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { SetStateAction, useRef, useState } from "react";
 import {
   CalendarIcon,
   EmojiHappyIcon,
@@ -7,8 +7,15 @@ import {
   SearchCircleIcon,
 } from "@heroicons/react/outline";
 import { useSession } from "next-auth/react";
+import { Tweet, TweetBody } from "../typings";
+import { fetchTweets } from "../utils/fetchTweets";
+import toast from "react-hot-toast";
 
-function TweetBox() {
+interface Props {
+  setTweets: React.Dispatch<SetStateAction<Tweet[]>>;
+}
+
+function TweetBox({ setTweets }: Props) {
   const [input, setInput] = useState("");
   const [image, setImage] = useState("");
   const { data: session } = useSession();
@@ -23,6 +30,41 @@ function TweetBox() {
     if (!imageInputRef.current?.value) return;
     setImage(imageInputRef.current.value);
     imageInputRef.current.value = "";
+    setimageUrlBox(false);
+  };
+
+  const postTweet = async () => {
+    const tweetBody: TweetBody = {
+      title: input,
+      username: session?.user?.name || "Unkown User",
+      profileImg:
+        session?.user?.image ||
+        "https://pbs.twimg.com/profile_images/1319551314230087681/NTQFUPNB_400x400.jpg",
+      image: image,
+    };
+    const result = await fetch(`/api/addTweet`, {
+      body: JSON.stringify(tweetBody),
+      method: "POST",
+    });
+
+    const json = await result.json();
+
+    const newTweets = await fetchTweets();
+    setTweets(newTweets);
+    toast("Tweet Posted", {
+      icon: "🚀",
+    });
+
+    return json;
+  };
+
+  const handleSumbit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
+    postTweet();
+
+    setInput("");
+    setImage("");
     setimageUrlBox(false);
   };
 
@@ -54,7 +96,8 @@ function TweetBox() {
                 <LocationMarkerIcon className="h-5 w-5 cursor-pointer transition-transform duration-150 ease-out hover:scale-150" />
               </div>
               <button
-                disabled={!input || !session}
+                onClick={handleSumbit}
+                disabled={!input}
                 className="bg-twitter px-5 py-2 font-bold text-white rounded-full disabled:opacity-40"
               >
                 Tweet
