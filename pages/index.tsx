@@ -16,7 +16,7 @@ const Home: NextPage = ({ tweets }: Props) => {
   return (
     // By default tailwind uses mobile view
     // Takes up full screen height but only scroll on widgets
-    <div className="lg:max-w-6xl mx-auto max-h-screen overflow-x-hidden">
+    <div className="lg:max-w-6xl mx-auto max-h-screen overflow-x-hidden overflow-y-hidden">
       <Head>
         <title>Twitter 2.0</title>
         <link rel="icon" href="/favicon.ico" />
