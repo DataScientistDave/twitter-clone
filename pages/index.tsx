@@ -12,7 +12,7 @@ interface Props {
   tweets: Tweet;
 }
 
-const Home: NextPage = ({ tweets }: Props) => {
+const Home: NextPage<Props> = ({ tweets }) => {
   return (
     // By default tailwind uses mobile view
     // Takes up full screen height but only scroll on widgets
