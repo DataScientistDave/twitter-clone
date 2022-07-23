@@ -9,7 +9,7 @@ import { fetchTweets } from "../utils/fetchTweets";
 import { Toaster } from "react-hot-toast";
 
 interface Props {
-  tweets: Tweet;
+  tweets: Tweet[];
 }
 
 const Home: NextPage<Props> = ({ tweets }) => {
